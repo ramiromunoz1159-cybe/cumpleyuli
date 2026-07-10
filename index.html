@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Cumpleaños</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-black:#08070a;
+    --bg-charcoal:#131018;
+    --bg-charcoal-2:#1b1522;
+    --fucsia:#ff2e88;
+    --dorado:#ffcc4d;
+    --violeta:#7c3aed;
+    --text:#f5f1ea;
+    --text-dim:#a79fb0;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{
+    scroll-behavior:smooth;
+    scroll-snap-type:y proximity;
+  }
+
+  body{
+    background:var(--bg-black);
+    color:var(--text);
+    font-family:'Manrope',sans-serif;
+    overflow-x:hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001s !important; transition-duration:0.001s !important;}
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Unbounded',sans-serif;
+  }
+
+  ::selection{background:var(--fucsia);color:var(--bg-black);}
+
+  /* ---------- SECTIONS ---------- */
+  .section{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    height:100dvh;
+    scroll-snap-align:start;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  /* ---------- NAV DOTS ---------- */
+  #progress-dots{
+    position:fixed;
+    right:22px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    z-index:500;
+  }
+  #progress-dots button{
+    width:10px;height:10px;
+    border-radius:50%;
+    border:1.5px solid var(--text-dim);
+    background:transparent;
+    cursor:pointer;
+    padding:0;
+    transition:all .35s ease;
+  }
+  #progress-dots button.active{
+    background:var(--fucsia);
+    border-color:var(--fucsia);
+    box-shadow:0 0 12px var(--fucsia);
+    transform:scale(1.3);
+  }
+
+  /* ---------- SOUND GATE (requerido por autoplay de navegadores) ---------- */
+  #sound-gate{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:rgba(8,7,10,0.92);
+    backdrop-filter:blur(6px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    cursor:pointer;
+    text-align:center;
+    transition:opacity .5s ease;
+  }
+  #sound-gate.hidden{
+    opacity:0;
+    pointer-events:none;
+  }
+  #sound-gate .gate-ring{
+    width:74px;height:74px;
+    border-radius:50%;
+    border:2px solid var(--fucsia);
+    display:flex;align-items:center;justify-content:center;
+    animation:pulse-ring 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse-ring{
+    0%,100%{box-shadow:0 0 0 0 rgba(255,46,136,.5);}
+    50%{box-shadow:0 0 0 14px rgba(255,46,136,0);}
+  }
+  #sound-gate p{
+    font-family:'Unbounded',sans-serif;
+    font-size:.85rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+  }
+  #sound-gate span.small{
+    font-family:'Manrope',sans-serif;
+    font-size:.75rem;
+    color:var(--text-dim);
+    text-transform:none;
+    letter-spacing:normal;
+  }
+
+  /* ================= HERO ================= */
+  #hero{
+    background:
+      radial-gradient(circle at 50% 20%, rgba(124,58,237,.35), transparent 55%),
+      radial-gradient(circle at 80% 80%, rgba(255,46,136,.25), transparent 50%),
+      var(--bg-black);
+    flex-direction:column;
+    text-align:center;
+    padding:0 6vw;
+  }
+
+  .glow-orb{
+    position:absolute;
+    width:520px;height:520px;
+    border-radius:50%;
+    background:conic-gradient(from 0deg, var(--fucsia), var(--violeta), var(--dorado), var(--fucsia));
+    filter:blur(120px);
+    opacity:.35;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    animation:orb-spin 14s linear infinite;
+    z-index:0;
+  }
+  @keyframes orb-spin{
+    to{transform:translate(-50%,-50%) rotate(360deg);}
+  }
+
+  .confetti{
+    position:absolute;
+    top:-10%;
+    border-radius:2px;
+    opacity:.85;
+    animation:fall linear infinite;
+    z-index:1;
+  }
+  @keyframes fall{
+    to{ transform:translateY(115vh) rotate(540deg); }
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:22px;
+  }
+
+  .avatar-ring{
+    width:150px;height:150px;
+    border-radius:50%;
+    padding:4px;
+    background:conic-gradient(var(--fucsia), var(--dorado), var(--violeta), var(--fucsia));
+    animation:orb-spin 6s linear infinite;
+  }
+  .avatar-ring .avatar-inner{
+    width:100%;height:100%;
+    border-radius:50%;
+    background:var(--bg-charcoal) center/cover no-repeat;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    border:3px solid var(--bg-black);
+  }
+  .avatar-inner img{
+    width:100%;height:100%;
+    object-fit:cover;
+  }
+
+  .eyebrow{
+    font-size:.75rem;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    color:var(--dorado);
+    font-weight:600;
+  }
+
+  .hero-title{
+    font-size:clamp(2.6rem, 9vw, 6.5rem);
+    font-weight:900;
+    line-height:0.95;
+    background:linear-gradient(90deg, var(--fucsia), var(--dorado) 50%, var(--violeta));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:0 0 60px rgba(255,46,136,.25);
+  }
+
+  .hero-name{
+    font-size:clamp(1.2rem,3vw,1.6rem);
+    color:var(--text-dim);
+    font-weight:500;
+    letter-spacing:.02em;
+  }
+  .hero-name strong{
+    color:var(--text);
+    font-weight:700;
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:38px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    color:var(--text-dim);
+    font-size:.7rem;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    z-index:2;
+    animation:bob 2.2s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(8px);}
+  }
+  .scroll-cue svg{width:18px;height:18px;stroke:var(--fucsia);}
+
+  /* ================= GALLERY ================= */
+  #gallery{
+    background:var(--bg-charcoal);
+  }
+  .photo-viewer{
+    position:relative;
+    width:100%;height:100%;
+  }
+  .slides{
+    position:relative;
+    width:100%;height:100%;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    transform:scale(1.04);
+    transition:opacity .7s ease, transform .9s cubic-bezier(.2,.8,.2,1);
+    pointer-events:none;
+  }
+  .slide.active{
+    opacity:1;
+    transform:scale(1);
+    pointer-events:auto;
+  }
+  .slide .frame{
+    width:100%;
+    height:100%;
+    background:linear-gradient(135deg, var(--bg-charcoal-2), var(--bg-black));
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+  }
+  /* Fondo desenfocado: rellena toda la pantalla sin importar la orientación de la foto */
+  .slide .bg-fill{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:blur(60px) brightness(.45) saturate(1.15);
+    transform:scale(1.25);
+  }
+  /* Overlay para legibilidad del texto y unificar el tono entre fotos */
+  .slide .frame::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(8,7,10,.15) 0%, rgba(8,7,10,0) 30%, rgba(8,7,10,.9) 100%);
+    z-index:1;
+    pointer-events:none;
+  }
+  /* Contenedor de la foto nítida: mismo tamaño/posición en todas las fotos */
+  .photo-wrap{
+    position:relative;
+    z-index:2;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:5vh 5vw 13vh;
+  }
+  .slide .photo{
+    max-width:100%;
+    max-height:100%;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:18px;
+    box-shadow:0 40px 100px -20px rgba(0,0,0,.75), 0 0 0 1px rgba(245,241,234,.08);
+  }
+  .slide-caption{
+    position:relative;
+    z-index:3;
+    padding:0 6vw 60px;
+    text-align:center;
+  }
+  .slide-caption .num{
+    font-family:'Unbounded',sans-serif;
+    font-size:.75rem;
+    letter-spacing:.3em;
+    color:var(--dorado);
+    text-transform:uppercase;
+  }
+  .slide-caption p{
+    margin-top:8px;
+    font-size:1.1rem;
+    color:var(--text);
+    font-weight:500;
+  }
+
+  .arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:56px;height:56px;
+    border-radius:50%;
+    border:1.5px solid rgba(245,241,234,.25);
+    background:rgba(8,7,10,.4);
+    backdrop-filter:blur(6px);
+    color:var(--text);
+    font-size:1.4rem;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    z-index:10;
+    transition:all .3s ease;
+  }
+  .arrow:hover{
+    border-color:var(--fucsia);
+    box-shadow:0 0 22px rgba(255,46,136,.4);
+    transform:translateY(-50%) scale(1.08);
+  }
+  .arrow.prev{left:26px;}
+  .arrow.next{right:26px;}
+
+  .slide-dots{
+    position:absolute;
+    bottom:22px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:10px;
+    z-index:10;
+    max-width:80vw;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .slide-dots button{
+    width:20px;height:3px;
+    background:rgba(245,241,234,.25);
+    border:none;
+    cursor:pointer;
+    transition:all .3s ease;
+  }
+  .slide-dots button.active{
+    background:var(--fucsia);
+    box-shadow:0 0 10px var(--fucsia);
+  }
+
+  /* ================= LETTER ================= */
+  /* IMPORTANTE: esta sección puede ser más alta que la pantalla (cartas largas),
+     así que NO se fuerza a 100vh ni overflow:hidden como las demás. */
+  #letter{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,204,77,.12), transparent 55%),
+      var(--bg-black);
+    padding:12vh 6vw;
+    height:auto;
+    min-height:100vh;
+    min-height:100dvh;
+    overflow:visible;
+  }
+  .letter-card{
+    max-width:680px;
+    width:100%;
+    background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+    border:1px solid rgba(245,241,234,.12);
+    border-radius:18px;
+    padding:min(7vw,64px) min(6vw,56px);
+    position:relative;
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 1.1s ease, transform 1.1s ease;
+    margin:0 auto;
+    z-index:2;
+  }
+  .letter-card.visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---- Corazones flotantes: aparecen y se desvanecen mientras se lee la carta ---- */
+  .hearts-container{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:1;
+  }
+  .floating-heart{
+    position:absolute;
+    bottom:-60px;
+    opacity:0;
+    line-height:1;
+    animation:heart-rise linear forwards;
+    will-change:transform, opacity;
+  }
+  @keyframes heart-rise{
+    0%{opacity:0; transform:translateY(0) scale(.5) rotate(0deg);}
+    12%{opacity:1;}
+    85%{opacity:1;}
+    100%{opacity:0; transform:translateY(-115vh) scale(1.15) rotate(14deg);}
+  }
+  .letter-card::before{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    border-radius:18px;
+    padding:1px;
+    background:linear-gradient(135deg, var(--fucsia), var(--violeta), var(--dorado));
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    opacity:.5;
+    pointer-events:none;
+  }
+  .letter-eyebrow{
+    font-family:'Unbounded',sans-serif;
+    font-size:.7rem;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--fucsia);
+    margin-bottom:18px;
+    display:block;
+  }
+  .letter-text{
+    font-size:clamp(1rem,2vw,1.2rem);
+    line-height:1.85;
+    color:var(--text);
+    font-weight:300;
+    white-space:pre-line;
+  }
+  .signature{
+    margin-top:34px;
+    font-family:'Unbounded',sans-serif;
+    font-size:1rem;
+    font-weight:700;
+    background:linear-gradient(90deg, var(--dorado), var(--fucsia));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  /* ================= RESPONSIVE ================= */
+
+  /* Tablets y pantallas medianas */
+  @media (max-width:900px){
+    .glow-orb{width:420px;height:420px;filter:blur(100px);}
+    .avatar-ring{width:130px;height:130px;}
+    .letter-card{max-width:90vw;}
+  }
+
+  /* Celulares */
+  @media (max-width:640px){
+    #progress-dots{
+      right:10px;
+      gap:12px;
+    }
+    #progress-dots button{
+      width:8px;height:8px;
+    }
+
+    #hero{padding:0 8vw;}
+    .glow-orb{width:320px;height:320px;filter:blur(80px);opacity:.4;}
+    .avatar-ring{width:100px;height:100px;}
+    .hero-content{gap:16px;}
+    .eyebrow{font-size:.65rem;letter-spacing:.28em;}
+    .hero-name{font-size:1rem;}
+    .scroll-cue{bottom:22px;font-size:.62rem;}
+
+    .arrow{
+      width:42px;height:42px;
+      font-size:1.1rem;
+    }
+    .arrow.prev{left:10px;}
+    .arrow.next{right:10px;}
+
+    .photo-wrap{padding:4vh 4vw 15vh;}
+    .slide .photo{border-radius:12px;}
+    .slide-caption{padding:0 8vw 82px;}
+    .slide-caption p{font-size:.92rem;}
+    .slide-caption .num{font-size:.65rem;}
+
+    .slide-dots{
+      bottom:16px;
+      gap:6px;
+      max-width:88vw;
+    }
+    .slide-dots button{
+      width:14px;height:3px;
+    }
+
+    #letter{padding:9vh 5vw;}
+    .letter-card{
+      padding:34px 22px;
+      border-radius:14px;
+    }
+    .letter-eyebrow{font-size:.62rem;margin-bottom:14px;}
+    .letter-text{font-size:1rem;line-height:1.75;}
+    .signature{font-size:.9rem;margin-top:26px;}
+
+    #sound-gate .gate-ring{width:60px;height:60px;}
+    #sound-gate p{font-size:.72rem;}
+  }
+
+  /* Celulares muy pequeños */
+  @media (max-width:380px){
+    .hero-title{font-size:2.2rem;}
+    .avatar-ring{width:84px;height:84px;}
+    .arrow{width:38px;height:38px;font-size:1rem;}
+  }
+
+  /* Pantallas bajas en horizontal (celular acostado) */
+  @media (max-height:480px) and (orientation:landscape){
+    .avatar-ring{width:76px;height:76px;}
+    .hero-content{gap:10px;}
+    .scroll-cue{display:none;}
+    .photo-wrap{padding:3vh 4vw 12vh;}
+    #letter{padding:6vh 5vw;}
+    .letter-card{padding:24px 20px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== SOUND GATE: los navegadores bloquean el autoplay con sonido hasta un clic ===== -->
+  <div id="sound-gate">
+    <div class="gate-ring">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff2e88" stroke-width="2">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+    </div>
+    <p>Toca para comenzar</p>
+    <span class="small">(así arranca la música 🎵)</span>
+  </div>
+
+  <!-- ===== NAV DOTS ===== -->
+  <div id="progress-dots">
+    <button data-target="hero" class="active" aria-label="Ir a inicio"></button>
+    <button data-target="gallery" aria-label="Ir a galería"></button>
+    <button data-target="letter" aria-label="Ir a carta"></button>
+  </div>
+
+  <main>
+
+    <!-- ================= HERO ================= -->
+    <section id="hero" class="section">
+      <div class="glow-orb"></div>
+      <!-- Confetti generado por JS -->
+      <div class="hero-content">
+        <div class="avatar-ring">
+          <div class="avatar-inner">
+            <!-- FOTO PRINCIPAL / AVATAR: reemplaza el src -->
+            <img src="fotos/5.png" alt="Foto del cumpleañero/a" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <span class="eyebrow">Hoy se celebra</span>
+        <h1 class="hero-title">¡FELIZ<br>CUMPLEAÑOS!</h1>
+        <p class="hero-name">Para <strong><!-- NOMBRE: reemplaza aquí --> mi esposa Yuliezka</strong>, con todo el cariño</p>
+      </div>
+      <div class="scroll-cue">
+        <span>Desliza</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </div>
+    </section>
+
+    <!-- ================= GALERÍA ================= -->
+    <section id="gallery" class="section">
+      <div class="photo-viewer">
+        <div class="slides">
+
+          <figure class="slide active">
+            <div class="frame">
+              <!-- FOTO 1: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/1.jpeg" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/1.jpeg" alt="Foto 1">
+              </div>
+              <div class="slide-caption">
+                <span class="num">01</span>
+                <p>En un mundo tan inmenso, mi único lugar es contigo.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 2: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/2.jpeg" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/2.jpeg" alt="Foto 2">
+              </div>
+              <div class="slide-caption">
+                <span class="num">02</span>
+                <p>Aunque el sol ilumine el mundo, ninguna luz brilla tanto como la que tú proyectas sobre mí.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 3: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/3.jpg" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/3.jpg" alt="Foto 3">
+              </div>
+              <div class="slide-caption">
+                <span class="num">03</span>
+                <p>La única cosa que realmente me hace sentir completo es tenerte entre mis brazos.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 4: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/4.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/4.png" alt="Foto 4">
+              </div>
+              <div class="slide-caption">
+                <span class="num">04</span>
+                <p>Entre millones de combinaciones, la nuestra es la que más brilla.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 5: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/6.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/6.png" alt="Foto 5">
+              </div>
+              <div class="slide-caption">
+                <span class="num">05</span>
+                <p>El mar puede ser inmenso y profundo, pero tus palabras me hacen sentir una grandeza aún mayor.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 6: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/7.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/7.png" alt="Foto 6">
+              </div>
+              <div class="slide-caption">
+                <span class="num">06</span>
+                <p>En un mundo lleno de piezas cuadradas, tú siempre serás la pieza que encaja perfectamente conmigo.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 7: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/8.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/8.png" alt="Foto 7">
+              </div>
+              <div class="slide-caption">
+                <span class="num">07</span>
+                <p>Aunque todo se vuelva complicado, tú siempre serás mi motivo para seguir adelante.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 8: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/9.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/9.png" alt="Foto 8">
+              </div>
+              <div class="slide-caption">
+                <span class="num">08</span>
+                <p>Entre millones de corazones, siempre elegiría el tuyo.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 9: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/10.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/10.png" alt="Foto 9">
+              </div>
+              <div class="slide-caption">
+                <span class="num">09</span>
+                <p>El fútbol une corazones, pero contigo a mi lado siento que tengo mil corazones latiendo por nuestra historia</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 10: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/11.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/11.png" alt="Foto 10">
+              </div>
+              <div class="slide-caption">
+                <span class="num">10</span>
+                <p>Nuestro amor se ha vuelto tan inmenso que ya no parecen dos corazones, sino uno solo latiendo al mismo ritmo</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 11: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/12.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/12.png" alt="Foto 11">
+              </div>
+              <div class="slide-caption">
+                <span class="num">11</span>
+                <p>En la oscuridad de la noche, tú siempre serás la luna que ilumina mi camino y me guía</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 12: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/13.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/13.png" alt="Foto 12">
+              </div>
+              <div class="slide-caption">
+                <span class="num">12</span>
+                <p>Nuevas aventuras, nuevos juegos y nuevos momentos… todo lo quiero vivir contigo.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 13: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/14.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/14.png" alt="Foto 13">
+              </div>
+              <div class="slide-caption">
+                <span class="num">13</span>
+                <p>Aunque todo parezca ridículo o extraño, lo único que importa es estar a tu lado.</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 14: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/15.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/15.png" alt="Foto 14">
+              </div>
+              <div class="slide-caption">
+                <span class="num">14</span>
+                <p>De todos los lugares que existen, el único donde siempre quiero estar es a tu lado, mi hermosa reina.o</p>
+              </div>
+            </div>
+          </figure>
+
+          <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 15: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/16.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/16.png" alt="Foto 15">
+              </div>
+              <div class="slide-caption">
+                <span class="num">15</span>
+                <p>Tú siempre serás mi mejor compañía, y aunque el camino esté lleno de obstáculos, nunca soltaré tu mano, porque contigo cualquier dificultad vale la pena.</p>
+              </div>
+            </div>
+          </figure>
+
+            <figure class="slide">
+            <div class="frame">
+              <!-- FOTO 15: reemplaza el src en las DOS imágenes de abajo con la misma URL -->
+              <img class="bg-fill" src="fotos/17.png" alt="" aria-hidden="true">
+              <div class="photo-wrap">
+                <img class="photo" src="fotos/17.png" alt="Foto 15">
+              </div>
+              <div class="slide-caption">
+                <span class="num">16</span>
+                <p>Solo bastaron 24 horas contigo para darme cuenta de que eres mi lugar favorito en el mundo.</p>
+              </div>
+            </div>
+          </figure>
+
+        </div>
+
+        <button class="arrow prev" aria-label="Foto anterior">&#8592;</button>
+        <button class="arrow next" aria-label="Foto siguiente">&#8594;</button>
+
+        <div class="slide-dots"></div>
+      </div>
+    </section>
+
+    <!-- ================= CARTA ================= -->
+    <section id="letter" class="section">
+      <!-- Contenedor de corazones flotantes (se llenan automáticamente por JS) -->
+      <div class="hearts-container" aria-hidden="true"></div>
+      <div class="letter-card">
+        <span class="letter-eyebrow">Una carta para ti</span>
+        <p class="letter-text"><!-- ESCRIBE AQUÍ EL TEXTO DE LA CARTA -->
+Hola, mi amor.
+
+Feliz cumpleaños, mi princesa. Hoy cumples 19 años, y no puedo evitar sentir una enorme felicidad por poder celebrar un año más de tu vida, aunque sea a la distancia. Ya llevamos más de un año juntos, y si miro hacia atrás, me doy cuenta de lo increíble que ha sido compartir este tiempo contigo. Gracias por llegar a mi vida y convertirte en la persona que más amo.
+
+Hoy quiero desearte un día maravilloso. Espero que sonrías mucho, que disfrutes cada momento y que, aunque por alguna razón no puedas estar con toda tu familia, nunca olvides que siempre me tendrás a mí. Quiero que sientas mi compañía en cada instante, porque mi corazón está contigo y siempre lo estará. Hoy más que nunca quiero que te sientas especial, porque realmente lo eres. Eres una persona única, alguien que cambió mi vida para mejor y que cada día me da más razones para seguir adelante.
+
+Este es nuestro segundo cumpleaños juntos, y pensar en eso me llena de ilusión. Me hace feliz imaginar todos los cumpleaños que todavía nos faltan por compartir. Sueño con el día en que pueda abrazarte al comenzar este día, mirarte a los ojos y decirte en persona lo mucho que te amo. Ese es uno de los momentos que más deseo vivir contigo.
+
+Tal vez estas palabras no sean suficientes para expresar todo lo que siento, pero nacen desde lo más profundo de mi corazón. Desde que llegaste a mi vida he descubierto emociones que ni siquiera sabía que existían. Me has hecho sentir amado, comprendido, tranquilo y completo. Contigo aprendí que el amor de verdad no solo se dice, también se demuestra con los pequeños detalles, con la paciencia, con el apoyo y con el deseo de construir un futuro juntos.
+
+Sé que este regalo quizá no sea el más grande o el más costoso, porque tú mereces muchísimo más. Mereces cosas increíbles, mereces que te consientan todos los días y que nunca dudes de lo valiosa que eres. Pero quiero que sepas que cada detalle que hago para ti está lleno de amor, cariño y dedicación. Lo más importante para mí es que puedas sentir cuánto te amo en cada palabra y en cada pequeño esfuerzo.
+
+Prometo seguir luchando por nuestro futuro. Sé que llegará el día en que podamos estar juntos, celebrar cada cumpleaños abrazados, salir a pasear, reírnos de nuestras locuras y crear recuerdos que duren toda la vida. Quiero ser la persona que te haga sentir segura, amada, querida y feliz. Quiero recordarte todos los días que eres única, que no hay nadie como tú y que jamás podrías ser reemplazada en mi corazón.
+
+También deseo que cumplas cada uno de tus sueños y alcances todas las metas que te propongas. Confío en ti porque sé la mujer tan fuerte, inteligente, hermosa y maravillosa que eres. Nunca dejes de creer en ti, porque yo siempre creeré en ti incluso cuando tú dudes. Estaré a tu lado para apoyarte en los días buenos y también en los difíciles, porque eso significa amarte de verdad.
+
+Gracias por existir, por elegirme, por hacerme tan feliz y por permitirme formar parte de tu vida. Espero que este sea solo uno de los muchísimos cumpleaños que podamos celebrar juntos. Mi mayor deseo es seguir escribiendo nuestra historia, creciendo a tu lado y amándote con la misma intensidad, o incluso más, cada día que pase.
+
+Feliz cumpleaños, mi esposa hermosa. Que Dios te bendiga, te cuide siempre y te regale muchísimos años más de vida. Nunca olvides que eres el amor de mi vida, mi lugar favorito y la persona con la que quiero compartir todos mis mañanas y todos mis futuros.
+
+Te amo con todo mi corazón, hoy, mañana y siempre. ❤️
+</p>
+        <p class="signature">— [Ramiro]</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== AUDIO ===== -->
+  <!-- CANCIÓN 1: reemplaza con tu URL de audio -->
+  <audio id="song1" loop preload="auto">
+    <source src="mañanitas.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- CANCIÓN 2: reemplaza con tu URL de audio -->
+  <audio id="song2" loop preload="auto">
+    <source src="carta.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+  (function(){
+    /* ---------------- CONFETTI DECORATIVO ---------------- */
+    const hero = document.getElementById('hero');
+    const colors = ['#ff2e88','#ffcc4d','#7c3aed','#f5f1ea'];
+    const confettiCount = window.innerWidth < 640 ? 18 : 34;
+    for(let i=0;i<confettiCount;i++){
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      const size = 5 + Math.random()*7;
+      c.style.width = size+'px';
+      c.style.height = (size*0.4 + 4)+'px';
+      c.style.left = Math.random()*100+'%';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (6+Math.random()*7)+'s';
+      c.style.animationDelay = (Math.random()*8)+'s';
+      hero.appendChild(c);
+    }
+
+    /* ---------------- AUDIO: reproducción + gate + crossfade ---------------- */
+    const song1 = document.getElementById('song1');
+    const song2 = document.getElementById('song2');
+    const gate = document.getElementById('sound-gate');
+    song1.volume = 1;
+    song2.volume = 0;
+    let audioStarted = false;
+    let letterSwapped = false;
+
+    function startAudio(){
+      if(audioStarted) return;
+      audioStarted = true;
+      song1.play().catch(()=>{ /* si falla, el gate permanece visible */ });
+      gate.classList.add('hidden');
+    }
+
+    // Intento de autoplay inmediato (funciona en algunos navegadores/condiciones)
+    const tryAutoplay = song1.play();
+    if(tryAutoplay !== undefined){
+      tryAutoplay.then(()=>{
+        audioStarted = true;
+        gate.classList.add('hidden');
+      }).catch(()=>{
+        // Autoplay bloqueado: se espera interacción del usuario
+      });
+    }
+
+    gate.addEventListener('click', startAudio);
+    document.addEventListener('click', function once(){
+      startAudio();
+      document.removeEventListener('click', once);
+    }, {once:true});
+
+    function crossfadeToSong2(){
+      if(letterSwapped) return;
+      letterSwapped = true;
+      song2.currentTime = 0;
+      song2.play().catch(()=>{});
+      const duration = 1200; // ms
+      const steps = 24;
+      let step = 0;
+      const interval = setInterval(()=>{
+        step++;
+        const t = step/steps;
+        song1.volume = Math.max(0, 1 - t);
+        song2.volume = Math.min(1, t);
+        if(step >= steps){
+          clearInterval(interval);
+          song1.pause();
+        }
+      }, duration/steps);
+    }
+
+    /* ---------------- GALERÍA: navegación entre fotos ---------------- */
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap = document.querySelector('.slide-dots');
+    const prevBtn = document.querySelector('.arrow.prev');
+    const nextBtn = document.querySelector('.arrow.next');
+    const gallerySection = document.getElementById('gallery');
+    const letterSection = document.getElementById('letter');
+    let current = 0;
+
+    slides.forEach((_, i)=>{
+      const d = document.createElement('button');
+      if(i===0) d.classList.add('active');
+      d.addEventListener('click', ()=> showSlide(i));
+      dotsWrap.appendChild(d);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function showSlide(i){
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = i;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    prevBtn.addEventListener('click', ()=>{
+      const newIndex = (current - 1 + slides.length) % slides.length;
+      showSlide(newIndex);
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(current === slides.length - 1){
+        // Última foto -> ir automáticamente a la carta
+        letterSection.scrollIntoView({behavior:'smooth'});
+      } else {
+        showSlide(current + 1);
+      }
+    });
+
+    // Navegación con teclado cuando la galería está a la vista
+    document.addEventListener('keydown', (e)=>{
+      const rect = gallerySection.getBoundingClientRect();
+      const inView = rect.top > -window.innerHeight*0.5 && rect.top < window.innerHeight*0.5;
+      if(!inView) return;
+      if(e.key === 'ArrowRight') nextBtn.click();
+      if(e.key === 'ArrowLeft') prevBtn.click();
+    });
+
+    // Navegación con swipe táctil (móviles)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    gallerySection.addEventListener('touchstart', (e)=>{
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+    }, {passive:true});
+
+    gallerySection.addEventListener('touchend', (e)=>{
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      const SWIPE_THRESHOLD = 50;
+      // Solo si el movimiento horizontal es claramente mayor que el vertical
+      if(Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)){
+        if(dx < 0){
+          nextBtn.click(); // swipe hacia la izquierda -> siguiente foto
+        } else {
+          prevBtn.click(); // swipe hacia la derecha -> foto anterior
+        }
+      }
+    }, {passive:true});
+
+    /* ---------------- CORAZONES FLOTANTES: aparecen mientras se lee la carta ---------------- */
+    const heartsContainer = document.querySelector('.hearts-container');
+    const heartColors = ['#ff2e88','#ffcc4d','#7c3aed','#ff6fa8'];
+    let heartsInterval = null;
+
+    function spawnHeart(){
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = '❤';
+      const size = 14 + Math.random()*22;
+      const duration = 6 + Math.random()*6;
+      heart.style.left = Math.random()*100 + '%';
+      heart.style.fontSize = size + 'px';
+      heart.style.color = heartColors[Math.floor(Math.random()*heartColors.length)];
+      heart.style.animationDuration = duration + 's';
+      heart.style.filter = 'drop-shadow(0 0 6px rgba(255,46,136,.45))';
+      heartsContainer.appendChild(heart);
+      setTimeout(()=> heart.remove(), duration*1000 + 200);
+    }
+
+    function startHearts(){
+      if(heartsInterval) return;
+      spawnHeart();
+      heartsInterval = setInterval(spawnHeart, 650);
+    }
+
+    function stopHearts(){
+      if(heartsInterval){
+        clearInterval(heartsInterval);
+        heartsInterval = null;
+      }
+    }
+
+    /* ---------------- CARTA: fade-in + cambio de canción + corazones al llegar ---------------- */
+    const letterCard = document.querySelector('.letter-card');
+    const letterObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          letterCard.classList.add('visible');
+          crossfadeToSong2();
+          startHearts();
+        } else {
+          stopHearts();
+        }
+      });
+    }, {threshold:0.15});
+    letterObserver.observe(letterSection);
+
+    /* ---------------- NAV DOTS: resaltar sección activa ---------------- */
+    const navButtons = Array.from(document.querySelectorAll('#progress-dots button'));
+    const sectionsForNav = ['hero','gallery','letter'].map(id=>document.getElementById(id));
+
+    navButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.getElementById(btn.dataset.target).scrollIntoView({behavior:'smooth'});
+      });
+    });
+
+    const navObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          navButtons.forEach(b=>b.classList.remove('active'));
+          const match = navButtons.find(b=>b.dataset.target === entry.target.id);
+          if(match) match.classList.add('active');
+        }
+      });
+    }, {threshold:0.4});
+    sectionsForNav.forEach(s=>navObserver.observe(s));
+
+  })();
+  </script>
+
+</body>
+</html>
